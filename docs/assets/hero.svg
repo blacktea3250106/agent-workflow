@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="250" viewBox="0 0 900 250" role="img" aria-label="Pipeline: Task Spec, worker in its own git worktree, run_locked job lock, hand-back, acceptance re-run by the orchestrator, with health.py measuring the orchestrator session">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8b949e"/></marker></defs>
+<style>text{font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;fill:#c9d1d9}.h{font-size:15px;font-weight:600}.s{font-size:12px;fill:#8b949e}.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px}</style>
+<rect width="900" height="250" rx="12" fill="#0d1117" stroke="#30363d"/>
+<rect x="27" y="24" width="846" height="52" rx="8" fill="#161b22" stroke="#f85149" stroke-dasharray="4 3"/>
+<text x="43" y="46" class="h m" style="fill:#ff7b72">tools/health.py</text>
+<text x="43" y="65" class="s">runs on every user message: context size, unanswered messages, worker age, heavy jobs, P1 count</text>
+<text x="857" y="46" text-anchor="end" class="s">green is silent</text>
+<text x="857" y="65" text-anchor="end" class="s">yellow or red: warning + required action</text>
+<line x1="450.0" y1="78" x2="450.0" y2="112" stroke="#8b949e" stroke-dasharray="3 3" marker-end="url(#a)"/>
+<text x="458.0" y="100" class="s">gates parallelism</text>
+<rect x="27" y="118" width="150" height="104" rx="8" fill="#161b22" stroke="#79c0ff"/>
+<rect x="27" y="118" width="150" height="4" rx="2" fill="#79c0ff"/>
+<text x="102.0" y="148" text-anchor="middle" class="h" style="fill:#79c0ff">Task Spec</text>
+<text x="102.0" y="172" text-anchor="middle" class="s">schema check</text>
+<text x="102.0" y="189" text-anchor="middle" class="s">invariants pasted in</text>
+<text x="102.0" y="206" text-anchor="middle" class="s">sha256 recorded</text>
+<line x1="179" y1="170.0" x2="199" y2="170.0" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="201" y="118" width="150" height="104" rx="8" fill="#161b22" stroke="#d2a8ff"/>
+<rect x="201" y="118" width="150" height="4" rx="2" fill="#d2a8ff"/>
+<text x="276.0" y="148" text-anchor="middle" class="h" style="fill:#d2a8ff">Worker</text>
+<text x="276.0" y="172" text-anchor="middle" class="s">own git worktree</text>
+<text x="276.0" y="189" text-anchor="middle" class="s">pinned to base SHA</text>
+<text x="276.0" y="206" text-anchor="middle" class="s">one writer per file</text>
+<line x1="353" y1="170.0" x2="373" y2="170.0" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="375" y="118" width="150" height="104" rx="8" fill="#161b22" stroke="#ffa657"/>
+<rect x="375" y="118" width="150" height="4" rx="2" fill="#ffa657"/>
+<text x="450.0" y="148" text-anchor="middle" class="h" style="fill:#ffa657">run_locked.py</text>
+<text x="450.0" y="172" text-anchor="middle" class="s">one heavy job</text>
+<text x="450.0" y="189" text-anchor="middle" class="s">at a time</text>
+<text x="450.0" y="206" text-anchor="middle" class="s">logs to file, tail only</text>
+<line x1="527" y1="170.0" x2="547" y2="170.0" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="549" y="118" width="150" height="104" rx="8" fill="#161b22" stroke="#e3b341"/>
+<rect x="549" y="118" width="150" height="4" rx="2" fill="#e3b341"/>
+<text x="624.0" y="148" text-anchor="middle" class="h" style="fill:#e3b341">Hand-back</text>
+<text x="624.0" y="172" text-anchor="middle" class="s">about 10 lines</text>
+<text x="624.0" y="189" text-anchor="middle" class="s">+ diff + paths</text>
+<text x="624.0" y="206" text-anchor="middle" class="s">state: handed back</text>
+<line x1="701" y1="170.0" x2="721" y2="170.0" stroke="#8b949e" stroke-width="1.5" marker-end="url(#a)"/>
+<rect x="723" y="118" width="150" height="104" rx="8" fill="#161b22" stroke="#7ee787"/>
+<rect x="723" y="118" width="150" height="4" rx="2" fill="#7ee787"/>
+<text x="798.0" y="148" text-anchor="middle" class="h" style="fill:#7ee787">Acceptance</text>
+<text x="798.0" y="172" text-anchor="middle" class="s">orchestrator re-runs</text>
+<text x="798.0" y="189" text-anchor="middle" class="s">the checks itself</text>
+<text x="798.0" y="206" text-anchor="middle" class="s">verified, then merged</text>
+</svg>
