@@ -116,6 +116,7 @@ python3 -m unittest discover -s tests -v
 
 See [ARTICLE.md](ARTICLE.md) for the full story ([繁體中文](ARTICLE_zh-TW.md)).
 
-## Licence
 
-No licence file yet. Add one before reusing the code.
+## License
+
+MIT. See [LICENSE](LICENSE).
