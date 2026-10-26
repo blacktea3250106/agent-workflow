@@ -1,0 +1,27 @@
+{
+  "task_id": "P0-build-verify",
+  "tier": "S",
+  "provider": "claude",
+  "capability_profile": "evidence-verifier",
+  "mission": "Re-derive the numbers claimed for the current P0 build from the code itself, and say which claims do not reproduce.",
+  "decision_authority": "You decide which checks to run. You do not decide whether the stage gate passes; you report what you measured.",
+  "non_goals": [
+    "Do not fix the build.",
+    "Do not read the author's completion summary, the decision log or other reviews until your own numbers are on disk."
+  ],
+  "independence_mode": "VERIFY",
+  "allowed_context": [
+    "The original acceptance criteria",
+    "The build at a pinned commit or pinned file hashes",
+    "The test suite"
+  ],
+  "relevant_concerns": ["C09", "C10"],
+  "evidence_required": [
+    "Hashes of every file you verified, checked again at the end",
+    "Your own scripts and raw outputs, saved under the review folder",
+    "For each criterion: author's reading, your reading, and the measured basis"
+  ],
+  "output_contract": "Markdown report tagged OBSERVED / MEASURED / INFERRED, plus a table per criterion. Write only inside the review folder.",
+  "stop_condition": "Stop when every registered criterion has a reading, or after reporting which ones you could not check and why.",
+  "human_validation_status": "NOT_VALIDATED"
+}

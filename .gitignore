@@ -1,0 +1,19 @@
+# Secrets never enter the repo
+.env
+.env.*
+*.pem
+*.key
+
+# Runtime output written by the tools
+__pycache__/
+*.pyc
+*.log
+.run/
+tasks/
+render-logs/
+health/
+
+# Agent worktrees and editor noise
+.claude/worktrees/
+*-wt/
+.DS_Store

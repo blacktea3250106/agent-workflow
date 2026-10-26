@@ -1,0 +1,28 @@
+{
+  "task_id": "P1-signature-alt-A",
+  "tier": "S",
+  "provider": "either",
+  "capability_profile": "product-director",
+  "mission": "Independently propose the smallest playable experiment that tests whether the signature feature creates a second layer of decisions.",
+  "decision_authority": "You may choose slot counts, timing, costs and trigger rules for this prototype only. You may not change the owner invariants.",
+  "non_goals": [
+    "Do not design long-term progression.",
+    "Do not produce final art.",
+    "Do not assume the nested variant is required."
+  ],
+  "independence_mode": "BLIND_PROPOSAL",
+  "allowed_context": [
+    "OWNER_INTENT.md",
+    "The stage question for P1. No competing proposal and no director preference."
+  ],
+  "relevant_concerns": ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10"],
+  "evidence_required": [
+    "A falsifiable hypothesis",
+    "A 5 to 10 minute prototype plan",
+    "At least two failure modes",
+    "A measurement plan, with kill criteria written before any result exists"
+  ],
+  "output_contract": "Return: hypothesis, minimal rules, interaction flow, expected moment of insight, failure cases, evidence plan, kill criteria.",
+  "stop_condition": "Stop once a testable proposal exists. Do not expand into content production.",
+  "human_validation_status": "NOT_VALIDATED"
+}

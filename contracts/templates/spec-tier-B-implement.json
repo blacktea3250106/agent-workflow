@@ -1,0 +1,17 @@
+{
+  "task_id": "fix-health-process-count",
+  "tier": "B",
+  "provider": "codex",
+  "mission": "Make the health check count only real background render processes, not shells or search tools whose arguments mention the render binary.",
+  "decision_authority": "Implementation details inside tools/health.py are yours.",
+  "non_goals": ["Do not change thresholds.", "Do not touch any other file."],
+  "independence_mode": "IMPLEMENT",
+  "allowed_context": ["tools/health.py", "A sample `ps` output that reproduces the false positive"],
+  "evidence_required": [
+    "A table of process command lines with expected and actual counts, all passing",
+    "python3 -m py_compile and git diff --check both clean"
+  ],
+  "output_contract": "Patch to tools/health.py and a summary of at most 10 lines.",
+  "stop_condition": "Stop when the table passes. Report the base SHA you actually started from.",
+  "human_validation_status": "NOT_VALIDATED"
+}

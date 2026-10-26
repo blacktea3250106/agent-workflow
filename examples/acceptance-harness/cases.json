@@ -1,0 +1,79 @@
+[
+  {
+    "id": "normal", "name": "Create one order normally", "idempotency": true,
+    "faults": [], "events": [
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}}
+    ],
+    "expected": {"statuses": ["confirmed"], "orders": [{"tenant": "A", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}]}
+  },
+  {
+    "id": "duplicate", "name": "Same business request delivered twice", "idempotency": false,
+    "faults": [], "events": [
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}},
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}}
+    ],
+    "expected": {"statuses": ["confirmed", "confirmed"], "orders": [{"tenant": "A", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}]}
+  },
+  {
+    "id": "lost_response_idempotent", "name": "Response lost after commit; provider supports idempotency keys", "idempotency": true,
+    "faults": ["after_commit"], "events": [
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}}
+    ],
+    "expected": {"statuses": ["confirmed"], "orders": [{"tenant": "A", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}]}
+  },
+  {
+    "id": "lost_response_unknown", "name": "Response lost after commit; no idempotency, pause for verification", "idempotency": false,
+    "faults": ["after_commit"], "events": [
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}},
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}}
+    ],
+    "expected": {"statuses": ["needs_verification", "needs_verification"], "orders": [{"tenant": "A", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}]}
+  },
+  {
+    "id": "missing_field", "name": "Missing SKU; no order may be created", "idempotency": true,
+    "faults": [], "events": [
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "quantity": 2}}}
+    ],
+    "expected": {"statuses": ["rejected"], "orders": []}
+  },
+  {
+    "id": "key_conflict", "name": "Same operation ID with a changed quantity; reject the mix", "idempotency": true,
+    "faults": [], "events": [
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}},
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 3}}}
+    ],
+    "expected": {"statuses": ["confirmed", "key_conflict"], "orders": [{"tenant": "A", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}]}
+  },
+  {
+    "id": "tenant_scope", "name": "Same operation ID in two tenants; both must run", "idempotency": true,
+    "faults": [], "events": [
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}},
+      {"command": {"tenant": "B", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}}
+    ],
+    "expected": {"statuses": ["confirmed", "confirmed"], "orders": [{"tenant": "A", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}, {"tenant": "B", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}]}
+  },
+  {
+    "id": "correct_rejected_input", "name": "Rejected input can be corrected and resent under the same ID", "idempotency": true,
+    "faults": [], "events": [
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "quantity": 2}}},
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}}
+    ],
+    "expected": {"statuses": ["rejected", "confirmed"], "orders": [{"tenant": "A", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}]}
+  },
+  {
+    "id": "restart_idempotent", "name": "Remote done, crash before local receipt; idempotent retry", "idempotency": true,
+    "faults": [], "events": [
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}, "stop_after_remote_success": true},
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}}
+    ],
+    "expected": {"statuses": ["process_stopped", "confirmed"], "orders": [{"tenant": "A", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}]}
+  },
+  {
+    "id": "restart_unknown", "name": "Remote done, crash before local receipt; no idempotency, verify", "idempotency": false,
+    "faults": [], "events": [
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}, "stop_after_remote_success": true},
+      {"command": {"tenant": "A", "operation": "request-1", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}}
+    ],
+    "expected": {"statuses": ["process_stopped", "needs_verification"], "orders": [{"tenant": "A", "payload": {"customer": "demo", "sku": "DEMO-1", "quantity": 2}}]}
+  }
+]

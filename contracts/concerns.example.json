@@ -1,0 +1,21 @@
+{
+  "_comment": "Replace these with what the project owner actually cares about. The original registry had ten game-design concerns (core decisions, boredom, replay pull, game feel, build ecology, art, theme, signature mechanic, readability, evidence honesty).",
+  "tiers": {
+    "S": "all",
+    "A": ["C01", "C04", "C05", "C08", "C09", "C10"],
+    "B": ["C09", "C10"],
+    "C": []
+  },
+  "concerns": {
+    "C01": {"name": "Core value", "question": "Does the user get the main thing they came for, without a workaround?"},
+    "C02": {"name": "Friction", "question": "Where is the user waiting, repeating themselves, or doing chores the system could do?"},
+    "C03": {"name": "Return pull", "question": "Is there a real reason to come back, not a manufactured one (streaks, FOMO)?"},
+    "C04": {"name": "Feedback and pacing", "question": "Does every input get an immediate, readable response?"},
+    "C05": {"name": "Range of valid paths", "question": "Are there several workable ways to succeed, or one forced answer?"},
+    "C06": {"name": "Visual quality", "question": "Is the result coherent, intentional, complete and readable?"},
+    "C07": {"name": "Domain fit", "question": "Does the vocabulary help the user, or make them feel tested?"},
+    "C08": {"name": "Signature feature", "question": "Does the defining feature create new choices instead of being a free upgrade?"},
+    "C09": {"name": "Explainability", "question": "Can the user and the developer say why a result happened? Is it reproducible and testable?"},
+    "C10": {"name": "Evidence honesty", "question": "Is each conclusion backed by something that ran? Is anything not tested on humans labelled as such?"}
+  }
+}

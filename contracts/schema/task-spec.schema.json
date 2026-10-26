@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Task Spec",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_id",
+    "tier",
+    "mission",
+    "decision_authority",
+    "non_goals",
+    "independence_mode",
+    "allowed_context",
+    "evidence_required",
+    "output_contract",
+    "stop_condition",
+    "human_validation_status"
+  ],
+  "properties": {
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tier": {
+      "enum": [
+        "S",
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "provider": {
+      "enum": [
+        "claude",
+        "codex",
+        "either"
+      ]
+    },
+    "capability_profile": {
+      "type": "string"
+    },
+    "mission": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision_authority": {
+      "type": "string",
+      "minLength": 1
+    },
+    "non_goals": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "independence_mode": {
+      "enum": [
+        "BLIND_PROPOSAL",
+        "BLIND_CHALLENGE",
+        "IMPLEMENT",
+        "VERIFY",
+        "SYNTHESIZE",
+        "NORMAL"
+      ]
+    },
+    "allowed_context": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relevant_concerns": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^C[0-9]{2}$"
+      },
+      "uniqueItems": true
+    },
+    "evidence_required": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "output_contract": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stop_condition": {
+      "type": "string",
+      "minLength": 1
+    },
+    "human_validation_status": {
+      "enum": [
+        "NOT_VALIDATED",
+        "HUMAN_PLAYTEST_PENDING",
+        "HUMAN_EVIDENCE_PROVIDED"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "description": "Everything a worker must be told. build_task_packet.py refuses to render a prompt from a spec that fails this schema."
+}
