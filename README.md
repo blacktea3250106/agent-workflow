@@ -1,6 +1,8 @@
 # agent-workflow
 
-**Tooling and rules for running one coordinating Claude Code session with several Claude and Codex workers on one machine, with isolation, a job lock, measured health and acceptance gates.**
+**A 144-minute multi-agent session stalled. This is the measurement of why, and the job lock, health check and acceptance gates that fixed it.**
+
+Python stdlib only · 24 tests · 4 decision records with numbers
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Bash](https://img.shields.io/badge/bash-scripts-4EAA25?logo=gnubash&logoColor=white)](tools/dispatch_codex.sh)
@@ -32,6 +34,8 @@ This was extracted from two personal projects in October 2026: a Blender-rendere
 | Agent start failures | 0 of 10 (startup was not the problem) |
 
 The cause was not the number of agents. It was one session acting as chat window, dispatcher and render farm at once, with heavy output flowing into its context. The fixes are ordinary engineering: isolate each worker, serialize heavy jobs, keep logs on disk, measure the coordinator from the outside, validate prompts as contracts, and treat "handed back", "verified" and "merged" as three separate states.
+
+These are the same failure modes as any job system: unbounded output in the request path, no backpressure, and "200 OK" mistaken for "done". The fixes are the ones I would apply to a production queue.
 
 After the fixes, the health check logged 129 measurements over two days (78 green, 20 yellow, 31 red), and the first manual compaction went from 553,549 to 10,321 tokens in 77 seconds. No speed-up is claimed; the decision records say what is measured and what is still unverified.
 
